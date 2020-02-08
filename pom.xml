@@ -31,6 +31,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>de.data_experts.deg.java.util</groupId>
             <artifactId>xmlUtils</artifactId>
             <version>1.9</version>

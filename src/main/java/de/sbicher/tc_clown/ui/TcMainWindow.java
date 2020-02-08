@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.File;
+import javax.inject.Inject;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -27,6 +28,7 @@ public class TcMainWindow extends JFrame  {
     /**
      * Constructor
      */
+    @Inject
     public TcMainWindow(TcNames names) {
         super ("TC Clown");
 
