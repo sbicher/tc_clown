@@ -18,11 +18,13 @@ public class TcSettings {
 
     // File Table settings
     public static final String KEY_FILE_TABLE_FONT = "fileTable.font";
-    public static final String KEY_FILE_TABLE_BG_COLOR_EVEN_ROW = "fileTable.colors.evenRowBackground";
-    public static final String KEY_FILE_TABLE_BG_COLOR_ODD_ROW = "fileTable.colors.oddRowBackground";
+    public static final String KEY_FILE_TABLE_BG_COLOR_DIRECTORY_ROW = "fileTable.colors.directoryRowBackground";
+    public static final String KEY_FILE_TABLE_BG_COLOR_FILE_ROW = "fileTable.colors.fileRowBackground";
     public static final String KEY_FILE_TABLE_BG_COLOR_SELECTED_ROW = "fileTable.colors.selectedRowBackground";
     public static final String KEY_FILE_TABLE_FG_COLOR_UNSELECTED_ROW = "fileTable.colors.unselectedRowForeground";
     public static final String KEY_FILE_TABLE_FG_COLOR_SELECTED_ROW = "fileTable.colors.selectedRowForeground";
+
+
 
     /**
      * Map for all the settings (Key == key of the setting, value == the setting)
@@ -60,8 +62,8 @@ public class TcSettings {
                 return Font.class;
             case KEY_EXEC_HANDLE_ZIPS_LIKE_DIRS:
                 return Boolean.class;
-            case KEY_FILE_TABLE_BG_COLOR_EVEN_ROW:
-            case KEY_FILE_TABLE_BG_COLOR_ODD_ROW:
+            case KEY_FILE_TABLE_BG_COLOR_DIRECTORY_ROW:
+            case KEY_FILE_TABLE_BG_COLOR_FILE_ROW:
             case KEY_FILE_TABLE_BG_COLOR_SELECTED_ROW:
             case KEY_FILE_TABLE_FG_COLOR_SELECTED_ROW:
             case KEY_FILE_TABLE_FG_COLOR_UNSELECTED_ROW:

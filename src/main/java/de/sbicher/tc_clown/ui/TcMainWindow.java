@@ -190,12 +190,14 @@ public class TcMainWindow extends JFrame implements EventHandler {
 
         // if the new directory is the direct parent directory of the source directory of the event,
         // the source directory should be selected
+        int selectedRow = 0;
         if (Objects.equals(event.getSourceDir().getParentFile(),event.getTargetDir())) {
             int row = fileTableModel.getRowNumber(event.getSourceDir());
             if (row >= 0) {
-                this.fileTables.get(this.focusedFilePanelNr).getSelectionModel().setSelectionInterval(row,row);
+                selectedRow = row;
             }
         }
+                this.fileTables.get(this.focusedFilePanelNr).getSelectionModel().setSelectionInterval(selectedRow,selectedRow);
     }
 
 }

@@ -58,8 +58,8 @@ public class TcModule extends AbstractModule {
         settings.setSetting(TcSettings.KEY_DATE_FORMAT,"dd.MM.yyyy");
         settings.setSetting(TcSettings.KEY_DATE_TIME_FORMAT,"dd.MM.yyyy HH:mm:ss");
 
-        settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_ODD_ROW, Color.white);
-        settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_EVEN_ROW, Color.white);
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_FILE_ROW, Color.white);
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_DIRECTORY_ROW, new Color(243,241,186));
         settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_SELECTED_ROW, new Color(65,103,147));
 
         settings.setSetting(TcSettings.KEY_FILE_TABLE_FG_COLOR_UNSELECTED_ROW, Color.black);

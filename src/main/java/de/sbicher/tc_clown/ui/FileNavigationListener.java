@@ -38,13 +38,22 @@ public class FileNavigationListener extends KeyAdapter {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-            navigateToNextFolderOrStartFile(fileTableModel,TcFileInfo.NAVIGATE_UP);
-            return;
+            if (!e.isControlDown()) {
+                navigateToNextFolderOrStartFile(fileTableModel, TcFileInfo.NAVIGATE_UP);
+                return;
+            }
+
+            // navigate to top
+            File topFile = fileTableModel.getCurrentDirectory();
+            while (topFile.getParentFile() != null) {
+                topFile = topFile.getParentFile();
+            }
+            navigateToNextFolderOrStartFile(fileTableModel, new TcFileInfo(topFile));
         }
     }
 
     private void navigateToNextFolderOrStartFile(TcFileTableModel fileTableModel, TcFileInfo fileInfo) {
-            File currentDir = fileTableModel.getCurrentDirectory();
+        File currentDir = fileTableModel.getCurrentDirectory();
 
         if (fileInfo == TcFileInfo.NAVIGATE_UP) {
             whiteboard.fireEvent(new NavigateToDirEvent(currentDir, currentDir.getParentFile(), this));
@@ -57,7 +66,7 @@ public class FileNavigationListener extends KeyAdapter {
 
         if (fileInfo.getName().toLowerCase().endsWith(".zip")) {
             // zip-File
-            whiteboard.fireEvent(new NavigateToPackedContentEvent(fileInfo.getFile(),this));
+            whiteboard.fireEvent(new NavigateToPackedContentEvent(fileInfo.getFile(), this));
             return;
         }
 

@@ -75,6 +75,15 @@ public class TcFileTableModel extends AbstractTableModel {
             return 1;
         }
 
+        if (o1.getFile().isDirectory() && !o2.getFile().isDirectory()) {
+            // directories first
+            return -1;
+        }
+        if (o2.getFile().isDirectory() && !o1.getFile().isDirectory()) {
+            // directories first
+            return 1;
+        }
+
         return 0;
     }
 
