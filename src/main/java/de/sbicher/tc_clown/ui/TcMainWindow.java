@@ -103,6 +103,7 @@ public class TcMainWindow extends JFrame implements EventHandler {
     private JTable createFileTable(TcFileTableModel letfFileTableModel) {
         final JTable table = new JTable(letfFileTableModel);
         table.setDefaultRenderer(Object.class,tableRenderer);
+        table.setShowGrid(false);
 
         return table;
     }
@@ -120,6 +121,7 @@ public class TcMainWindow extends JFrame implements EventHandler {
      * Handles the selection of a file and displays that file in the currentWindow
      * @param event Event, that was fired for the selection
      */
+    @SuppressWarnings("unused")
     public void handleFileSelectedEvent(FileSelectedEvent event) {
         logger.info("File selected and displayed: " + event.getFile().getName());
     }

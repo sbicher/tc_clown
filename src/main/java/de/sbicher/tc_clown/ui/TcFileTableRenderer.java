@@ -24,6 +24,14 @@ public class TcFileTableRenderer implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         String display = value == null?"":getDisplayValue(value);
+
+        if (row == 0 && ( (TcFileTableModel) table.getModel()).hasNavigationRow()) {
+            // show the navigation row contents
+            if (column > 0) {
+                display = "";
+            }
+        }
+
         JLabel comp = new JLabel(display);
         comp.setFont((Font) settings.getSettingValue(TcSettings.KEY_FILE_TABLE_FONT));
 
@@ -41,6 +49,7 @@ public class TcFileTableRenderer implements TableCellRenderer {
 
         return comp;
     }
+
 
     private String getDisplayValue(Object value) {
         if (value instanceof TcFileSize) {

@@ -47,12 +47,8 @@ public class TcDirectoryPanel extends JPanel {
     }
 
     public void setDirectory(File newDir) {
-        this.showDirectoryContent(newDir);
+        fileTableModel.setDirectory(newDir);
     }
 
-    private void showDirectoryContent(File newDir) {
-        fileTableModel.setFiles(newDir.listFiles());
-
-    }
 
 }

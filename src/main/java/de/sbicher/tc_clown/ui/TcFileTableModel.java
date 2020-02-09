@@ -18,9 +18,9 @@ public class TcFileTableModel extends AbstractTableModel {
 
     private final TcNames names;
 
-    private static final int COL_NAME = 0;
-    private static final int COL_SIZE = 1;
-    private static final int COL_LAST_MODIFIED = 2;
+    static final int COL_NAME = 0;
+    static final int COL_SIZE = 1;
+    static final int COL_LAST_MODIFIED = 2;
 
     private int sortedColumn = COL_NAME;
 
@@ -29,6 +29,10 @@ public class TcFileTableModel extends AbstractTableModel {
     private final Comparator nameComparator = new Comparator<TcFileInfo>() {
         @Override
         public int compare(TcFileInfo o1, TcFileInfo o2) {
+            int specialCompareResult = compareSpecialFileInfos (o1,o2);
+            if(specialCompareResult != 0) {
+                return specialCompareResult;
+            }
             return o1.getName().compareToIgnoreCase(o2.getName());
         }
     };
@@ -37,6 +41,10 @@ public class TcFileTableModel extends AbstractTableModel {
     private final Comparator sizeComparator = new Comparator<TcFileInfo>() {
         @Override
         public int compare(TcFileInfo o1, TcFileInfo o2) {
+            int specialCompareResult = compareSpecialFileInfos (o1,o2);
+            if(specialCompareResult != 0) {
+                return specialCompareResult;
+            }
             return Long.compare(o1.getSize().getByteCount(),o2.getSize().getByteCount());
         }
     };
@@ -44,9 +52,29 @@ public class TcFileTableModel extends AbstractTableModel {
     private final Comparator lastModifiedComparator = new Comparator<TcFileInfo>() {
         @Override
         public int compare(TcFileInfo o1, TcFileInfo o2) {
+            int specialCompareResult = compareSpecialFileInfos (o1,o2);
+            if(specialCompareResult != 0) {
+                return specialCompareResult;
+            }
             return o1.getLastModified().getDate().compareTo(o2.getLastModified().getDate());
         }
     };
+
+    /**
+     * Compares the special entries for the file infos, like the "navigate one up" file info
+     * @param o1 First object to compare
+     * @param o2 Second object to compare
+     * @return Result of the comparison
+     */
+    private int compareSpecialFileInfos(TcFileInfo o1, TcFileInfo o2) {
+        if (o1 == TcFileInfo.NAVIGATE_UP) {
+            return -1;
+        } else if (o2 == TcFileInfo.NAVIGATE_UP) {
+            return 1;
+        }
+
+        return 0;
+    }
 
     public TcFileTableModel(TcNames names) {
         this.names = names;
@@ -66,12 +94,12 @@ public class TcFileTableModel extends AbstractTableModel {
         }
     }
 
-    public void setFiles(File[] files) {
-        this.files.clear();
+    /**
+     * Sets
+     * @param files
+     */
+    private void setFiles(File[] files) {
 
-        for (File f:files) {
-            this.files.add(new TcFileInfo(f));
-        }
 
         sort();
         this.fireTableDataChanged();
@@ -149,6 +177,26 @@ public class TcFileTableModel extends AbstractTableModel {
      * @param directory directory, which should be displayed
      */
     public void setDirectory(File directory) {
-        setFiles(directory.listFiles());
+        File[] filesToShow = directory.listFiles();
+
+        this.files.clear();
+
+        if (directory.getParentFile() != null) {
+            this.files.add(TcFileInfo.NAVIGATE_UP);
+        }
+
+        for (File f:filesToShow) {
+            this.files.add(new TcFileInfo(f));
+        }
+
+        sort();
+    }
+
+    /**
+     * Gives the information, wether the table has a navigation row currently (it has no one, when it is in the root directory)
+     * @return Information, if we have a navigation row
+     */
+    public boolean hasNavigationRow () {
+        return !this.files.isEmpty() && this.files.get(0) == TcFileInfo.NAVIGATE_UP;
     }
 }
