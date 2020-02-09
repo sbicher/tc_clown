@@ -6,6 +6,8 @@ import com.google.inject.Singleton;
 import de.sbicher.tc_clown.settings.TcSettings;
 import de.sbicher.tc_clown.settings.TcSettingsReader;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -35,7 +37,7 @@ public class TcModule extends AbstractModule {
 
     @Singleton
     @Provides
-    private TcSettings getSettings(TcSettingsReader settingsReader) throws IOException {
+    private TcSettings getSettings(TcSettingsReader settingsReader) throws IOException, FontFormatException {
         File settingsFile = new File ("tc_settings.xml");
 
         if (!settingsFile.exists()) {
@@ -50,7 +52,7 @@ public class TcModule extends AbstractModule {
      * Creates the default settings, when no settings file is present
      * @return the default settings
      */
-    private TcSettings createDefaultSettings() {
+    private TcSettings createDefaultSettings() throws IOException, FontFormatException {
         TcSettings settings = new TcSettings();
 
         settings.setSetting(TcSettings.KEY_DATE_FORMAT,"dd.MM.yyyy");
@@ -58,10 +60,15 @@ public class TcModule extends AbstractModule {
 
         settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_ODD_ROW, Color.white);
         settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_EVEN_ROW, Color.white);
-        settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_SELECTED_ROW, Color.blue);
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_SELECTED_ROW, new Color(65,103,147));
 
         settings.setSetting(TcSettings.KEY_FILE_TABLE_FG_COLOR_UNSELECTED_ROW, Color.black);
         settings.setSetting(TcSettings.KEY_FILE_TABLE_FG_COLOR_SELECTED_ROW, Color.white);
+
+        Font monospacedFont = Font.createFont(Font.TRUETYPE_FONT,TcModule.class.getResourceAsStream("/fonts/DejaVuSansMono.ttf"));
+        monospacedFont = monospacedFont.deriveFont(15f);
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_FONT, monospacedFont);
+
 
         return settings;
     }
