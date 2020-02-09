@@ -200,4 +200,8 @@ public class TcMainWindow extends JFrame implements EventHandler {
                 this.fileTables.get(this.focusedFilePanelNr).getSelectionModel().setSelectionInterval(selectedRow,selectedRow);
     }
 
+    public void focusFirstFilePane() throws InterruptedException {
+        this.fileTables.get(0).requestFocus();
+        this.fileTables.get(0).getSelectionModel().setSelectionInterval(0,0);
+    }
 }
