@@ -35,18 +35,21 @@ public class TcMainWindow extends JFrame implements EventHandler {
 
     private boolean isInLeftPanel = true;
 
+    private final  TcFileTableRenderer tableRenderer;
     /**
      * Constructor
      */
     @Inject
-    public TcMainWindow(TcNames names, Whiteboard whiteboard, ShortcutLinksPanel shortcutLinksPanel) {
+    public TcMainWindow(TcNames names, Whiteboard whiteboard, ShortcutLinksPanel shortcutLinksPanel, TcFileTableRenderer tableRenderer) {
         super("TC Clown");
 
         this.whiteboard = whiteboard;
         this.pnlShortcuts = shortcutLinksPanel;
+        this.tableRenderer = tableRenderer;
 
         this.letfFileTableModel = new TcFileTableModel(names);
         this.rightFileTableModel = new TcFileTableModel(names);
+
 
 
         initShortCutPanel();
@@ -75,11 +78,8 @@ public class TcMainWindow extends JFrame implements EventHandler {
      */
     private JComponent initDirectoriesPanel(TcNames names) {
 
-        final JTable tableLeft = new JTable(letfFileTableModel);
-        JScrollPane scrLeft = new JScrollPane(tableLeft);
-
-        final JTable tableRight = new JTable(rightFileTableModel);
-        JScrollPane scrRight = new JScrollPane(tableRight);
+        JScrollPane scrLeft = new JScrollPane(createFileTable (letfFileTableModel));
+        JScrollPane scrRight = new JScrollPane(createFileTable (rightFileTableModel));
 
         //Create a split pane with the two scroll panes in it.
          JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,scrLeft, scrRight);
@@ -98,6 +98,13 @@ public class TcMainWindow extends JFrame implements EventHandler {
         rightFileTableModel.setDirectory(new File("/tmp"));
 
         return splitPane;
+    }
+
+    private JTable createFileTable(TcFileTableModel letfFileTableModel) {
+        final JTable table = new JTable(letfFileTableModel);
+        table.setDefaultRenderer(Object.class,tableRenderer);
+
+        return table;
     }
 
     /**

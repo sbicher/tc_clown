@@ -5,6 +5,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import de.sbicher.tc_clown.settings.TcSettings;
 import de.sbicher.tc_clown.settings.TcSettingsReader;
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -53,6 +54,14 @@ public class TcModule extends AbstractModule {
         TcSettings settings = new TcSettings();
 
         settings.setSetting(TcSettings.KEY_DATE_FORMAT,"dd.MM.yyyy");
+        settings.setSetting(TcSettings.KEY_DATE_TIME_FORMAT,"dd.MM.yyyy HH:mm:ss");
+
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_ODD_ROW, Color.white);
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_EVEN_ROW, Color.white);
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_BG_COLOR_SELECTED_ROW, Color.blue);
+
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_FG_COLOR_UNSELECTED_ROW, Color.black);
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_FG_COLOR_SELECTED_ROW, Color.white);
 
         return settings;
     }
