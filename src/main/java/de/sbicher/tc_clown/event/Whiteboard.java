@@ -37,7 +37,7 @@ public class Whiteboard {
      * Zusammenfassung des konkreten Event-Handlers und der Methode, mit Hilfe derer die entsprechenden Events behandelt werden.
      */
     private static class EventHandlerMethod {
-        private final EventHandler handler;
+        private final TcEventHandler handler;
         private final Method handleMethod;
 
         /**
@@ -48,7 +48,7 @@ public class Whiteboard {
          * @param handleMethod
          *            Methode, die auf diesem Handler bei Eintreffen des Events ausgelöst wird
          */
-        private EventHandlerMethod(EventHandler handler, Method handleMethod) {
+        private EventHandlerMethod(TcEventHandler handler, Method handleMethod) {
             this.handler = handler;
             this.handleMethod = handleMethod;
         }
@@ -70,7 +70,7 @@ public class Whiteboard {
      * @param eventHandler
      *            Event-Handler, der registriert werden soll
      */
-    public void registerHandler(Class<? extends Event> eventType, EventHandler eventHandler) {
+    public void registerHandler(Class<? extends Event> eventType, TcEventHandler eventHandler) {
         logger.debug("Registriere Handler: " + Strings.padEnd(eventType.getSimpleName(), 30, ' ') + " - " + eventHandler.getClass().getSimpleName());
         String eventTypeName = eventType.getSimpleName();
         // der Handler muss die Methode handle<EVENT_TYPE_NAME> (eventType) implementieren
@@ -83,7 +83,7 @@ public class Whiteboard {
     }
 
     /**
-     * Feuert ein Event am {@link Whiteboard}, d.h. es wird publiziert und alle registrierten {@link EventHandler} werden informiert
+     * Feuert ein Event am {@link Whiteboard}, d.h. es wird publiziert und alle registrierten {@link TcEventHandler} werden informiert
      *
      * @param e
      *            Event, das gefeuert werden soll

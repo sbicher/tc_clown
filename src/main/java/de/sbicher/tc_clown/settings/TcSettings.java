@@ -23,8 +23,10 @@ public class TcSettings {
     public static final String KEY_FILE_TABLE_BG_COLOR_SELECTED_ROW = "fileTable.colors.selectedRowBackground";
     public static final String KEY_FILE_TABLE_FG_COLOR_UNSELECTED_ROW = "fileTable.colors.unselectedRowForeground";
     public static final String KEY_FILE_TABLE_FG_COLOR_SELECTED_ROW = "fileTable.colors.selectedRowForeground";
+    public static final String KEY_FILE_TABLE_COUNT = "fileTableCount"; // count of displayed fileTables
 
-
+    //
+    public static final String KEY_FILE_TABLE_MOVE_ON_SEARCH_DELETION = "fileTable.search.moveOnDeletion"; // should the cursor move to the (possible new) first fitting entry, when text from the search box is deleted?
 
     /**
      * Map for all the settings (Key == key of the setting, value == the setting)
@@ -57,17 +59,21 @@ public class TcSettings {
     public Class getTypeForKey(String key) {
         switch (key) {
             case KEY_DATE_FORMAT:
+            case KEY_DATE_TIME_FORMAT:
                 return String.class;
-            case KEY_FILE_TABLE_FONT:
-                return Font.class;
             case KEY_EXEC_HANDLE_ZIPS_LIKE_DIRS:
+            case KEY_FILE_TABLE_MOVE_ON_SEARCH_DELETION:
                 return Boolean.class;
+            case KEY_FILE_TABLE_COUNT:
+                return Integer.class;
             case KEY_FILE_TABLE_BG_COLOR_DIRECTORY_ROW:
             case KEY_FILE_TABLE_BG_COLOR_FILE_ROW:
             case KEY_FILE_TABLE_BG_COLOR_SELECTED_ROW:
             case KEY_FILE_TABLE_FG_COLOR_SELECTED_ROW:
             case KEY_FILE_TABLE_FG_COLOR_UNSELECTED_ROW:
                 return Color.class;
+            case KEY_FILE_TABLE_FONT:
+                return Font.class;
         }
 
         return null;

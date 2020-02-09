@@ -69,6 +69,9 @@ public class TcModule extends AbstractModule {
         monospacedFont = monospacedFont.deriveFont(15f);
         settings.setSetting(TcSettings.KEY_FILE_TABLE_FONT, monospacedFont);
 
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_MOVE_ON_SEARCH_DELETION,true);
+        settings.setSetting(TcSettings.KEY_FILE_TABLE_COUNT,2);
+
 
         return settings;
     }

@@ -246,4 +246,22 @@ public class TcFileTableModel extends AbstractTableModel {
 
         return -1;
     }
+
+    /**
+     * Searches for a file with this regex and delivers the first found position.<br />
+     * If no such file is found, -1 is returned
+     * @param fileRegex Regex for the searched file
+     * @return Index of the searched file in the model or -1
+     */
+    public int searchForFileIndexByRegex(String fileRegex) {
+        for (int i=0; i<files.size(); i++) {
+            TcFileInfo info = this.files.get(i);
+            if (info.getFile() != null && info.getFile().getName().matches(fileRegex)) {
+                return i;
+            }
+        }
+
+        // nothing found
+        return -1;
+    }
 }

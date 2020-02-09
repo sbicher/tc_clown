@@ -18,11 +18,7 @@ public class TcClownMain {
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				try {
 					mainWindow.focusFirstFilePane();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 		});
 	}

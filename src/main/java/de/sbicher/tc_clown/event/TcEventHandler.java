@@ -19,6 +19,6 @@ package de.sbicher.tc_clown.event;
  * Handles an event in the application.<br />
  * When an event "myHappEvent" is fired, the handler must call (and so it must be defined) a method called "handleMyHappyEvent".
  */
-public interface EventHandler {
+public interface TcEventHandler {
     // just a marker interface
 }
