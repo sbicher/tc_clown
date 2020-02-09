@@ -16,6 +16,8 @@ public class TcFileTableModel extends AbstractTableModel {
 
     private final List<TcFileInfo> files = new ArrayList<>();
 
+    private File currentDirectory = null;
+
     private final TcNames names;
 
     static final int COL_NAME = 0;
@@ -170,13 +172,25 @@ public class TcFileTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    /**
+     * Gets the file info at pos {@code row}
+     * @param row Row for which the file info is requested
+     * @return File info at this row
+     */
+    public TcFileInfo getFileInfo (int row) {
+        if (row < 0 || row >= this.files.size()) {
+            throw new IllegalArgumentException("Row out of scope: " + row + " (total size: " + files.size());
+        }
 
+        return this.files.get(row);
+    }
 
     /**
      * Setds the displayed directory in this model
      * @param directory directory, which should be displayed
      */
     public void setDirectory(File directory) {
+        this.currentDirectory = directory;
         File[] filesToShow = directory.listFiles();
 
         this.files.clear();
@@ -198,5 +212,29 @@ public class TcFileTableModel extends AbstractTableModel {
      */
     public boolean hasNavigationRow () {
         return !this.files.isEmpty() && this.files.get(0) == TcFileInfo.NAVIGATE_UP;
+    }
+
+    /**
+     * Gets the currently displayed directory
+     * @return currently displayed directory
+     */
+    public File getCurrentDirectory() {
+        return currentDirectory;
+    }
+
+    /**
+     * Gets the row number of the file in the model, which equals the searched file
+     * @param f searched file
+     * @return Number of the row, in which the file appears
+     */
+    public int getRowNumber(File f) {
+        for (int row=0; row<files.size(); row++) {
+            File fileInRow = files.get(row).getFile();
+            if (f.equals(fileInRow)) {
+                return row;
+            }
+        }
+
+        return -1;
     }
 }

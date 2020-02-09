@@ -46,4 +46,8 @@ public class TcFileInfo {
     public TcFileSize getSize() {
         return new TcFileSize(file.length());
     }
+
+    public File getFile() {
+        return file;
+    }
 }

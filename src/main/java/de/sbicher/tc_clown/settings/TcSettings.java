@@ -1,5 +1,6 @@
 package de.sbicher.tc_clown.settings;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,11 @@ public class TcSettings {
 
     public static final String KEY_DATE_FORMAT = "dateFormat";
     public static final String KEY_DATE_TIME_FORMAT = "dateTimeFormat";
+
+    // Execution settings
+    public static final String KEY_EXEC_HANDLE_ZIPS_LIKE_DIRS = "exec.handleZipLikeDirs"; // handle zip-files like directories and jump into them on ENTER
+
+    // File Table settings
     public static final String KEY_FILE_TABLE_FONT = "fileTable.font";
     public static final String KEY_FILE_TABLE_BG_COLOR_EVEN_ROW = "fileTable.colors.evenRowBackground";
     public static final String KEY_FILE_TABLE_BG_COLOR_ODD_ROW = "fileTable.colors.oddRowBackground";
@@ -52,6 +58,14 @@ public class TcSettings {
                 return String.class;
             case KEY_FILE_TABLE_FONT:
                 return Font.class;
+            case KEY_EXEC_HANDLE_ZIPS_LIKE_DIRS:
+                return Boolean.class;
+            case KEY_FILE_TABLE_BG_COLOR_EVEN_ROW:
+            case KEY_FILE_TABLE_BG_COLOR_ODD_ROW:
+            case KEY_FILE_TABLE_BG_COLOR_SELECTED_ROW:
+            case KEY_FILE_TABLE_FG_COLOR_SELECTED_ROW:
+            case KEY_FILE_TABLE_FG_COLOR_UNSELECTED_ROW:
+                return Color.class;
         }
 
         return null;
