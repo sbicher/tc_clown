@@ -12,7 +12,9 @@ import java.io.File;
 import javax.inject.Inject;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,9 +25,9 @@ public class TcMainWindow extends JFrame implements EventHandler {
 
     private final Logger logger = LoggerFactory.getLogger(TcMainWindow.class);
 
-    private final TcDirectoryPanel leftDirPanel;
+    private final TcFileTableModel letfFileTableModel;
 
-    private final TcDirectoryPanel rightDirPanel;
+    private final TcFileTableModel rightFileTableModel;
 
     private final ShortcutLinksPanel pnlShortcuts;
 
@@ -43,21 +45,22 @@ public class TcMainWindow extends JFrame implements EventHandler {
         this.whiteboard = whiteboard;
         this.pnlShortcuts = shortcutLinksPanel;
 
-        leftDirPanel = new TcDirectoryPanel(names);
-        rightDirPanel = new TcDirectoryPanel(names);
+        this.letfFileTableModel = new TcFileTableModel(names);
+        this.rightFileTableModel = new TcFileTableModel(names);
+
 
         initShortCutPanel();
-        JComponent pnlDirectories = initDirectoriesPanel();
+        JComponent pnlDirectories = initDirectoriesPanel(names);
 
         getContentPane().setLayout(new GridBagLayout());
         getContentPane().add(this.pnlShortcuts, new GridBagConstraints(0, 0, GridBagConstraints.REMAINDER, 1, 0.1, 0.1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
         getContentPane().add(pnlDirectories, new GridBagConstraints(0, 1, GridBagConstraints.REMAINDER, 1, 0.1, 10000.1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 10, 10, 10), 0, 0));
 
         // Testdtaen
-        leftDirPanel.setDirectory(new File("/home/bichi/ispace"));
-        rightDirPanel.setDirectory(new File("/tmp"));
-
         registerWhiteboardEvents();
+
+        setPreferredSize(new Dimension(400,400));
+        setMinimumSize(getPreferredSize());
 
     }
 
@@ -70,16 +73,31 @@ public class TcMainWindow extends JFrame implements EventHandler {
      *
      * @return Component for the directories-view
      */
-    private JComponent initDirectoriesPanel() {
-        JSplitPane pnlSplit = new JSplitPane();
+    private JComponent initDirectoriesPanel(TcNames names) {
 
-        pnlSplit.setLeftComponent(leftDirPanel);
-        pnlSplit.setRightComponent(rightDirPanel);
+        final JTable tableLeft = new JTable(letfFileTableModel);
+        JScrollPane scrLeft = new JScrollPane(tableLeft);
 
-        pnlSplit.setResizeWeight(0.5d);
-        pnlSplit.setDividerLocation(0.5d);
+        final JTable tableRight = new JTable(rightFileTableModel);
+        JScrollPane scrRight = new JScrollPane(tableRight);
 
-        return pnlSplit;
+        //Create a split pane with the two scroll panes in it.
+         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,scrLeft, scrRight);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setDividerLocation(0.5d);
+        splitPane.setResizeWeight(0.5d);
+
+        //Provide minimum sizes for the two components in the split pane.
+        Dimension minimumSize = new Dimension(100, 50);
+        scrLeft.setMinimumSize(minimumSize);
+        scrRight.setMinimumSize(minimumSize);
+
+        splitPane.setPreferredSize(new Dimension(400, 200));
+
+        letfFileTableModel.setDirectory(new File("/home/bichi/ispace"));
+        rightFileTableModel.setDirectory(new File("/tmp"));
+
+        return splitPane;
     }
 
     /**

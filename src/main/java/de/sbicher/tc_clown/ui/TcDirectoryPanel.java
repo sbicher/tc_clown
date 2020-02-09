@@ -1,8 +1,9 @@
 package de.sbicher.tc_clown.ui;
 
 import de.sbicher.tc_clown.i18n.TcNames;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.io.File;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -29,12 +30,13 @@ public class TcDirectoryPanel extends JPanel {
          initFileTable();
 
         JScrollPane scrContent = new JScrollPane(fileTable);
+        scrContent.setBackground(Color.blue);
+        scrContent.setMinimumSize(new Dimension(20,20));
+     //   scrContent.setPreferredSize(new Dimension(4000,4000));
         // scrContent.add(fileTable);
 
         this.add(scrContent);
-
-
-    }
+   }
 
     /**
      * Initializes the table for the directory contents

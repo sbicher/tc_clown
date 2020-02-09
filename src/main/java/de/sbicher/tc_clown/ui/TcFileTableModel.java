@@ -4,7 +4,6 @@ import de.sbicher.tc_clown.i18n.TcNames;
 import de.sbicher.tc_clown.model.TcFileInfo;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -76,5 +75,13 @@ public class TcFileTableModel extends AbstractTableModel {
             default:
                 throw new IllegalArgumentException("unknown column index: " + columnIndex);
         }
+    }
+
+    /**
+     * Setds the displayed directory in this model
+     * @param directory directory, which should be displayed
+     */
+    public void setDirectory(File directory) {
+        setFiles(directory.listFiles());
     }
 }
